@@ -1,0 +1,6 @@
+{
+    "board": "arduino:avr:uno",
+    "port": "/dev/ttyUSB0",
+    "programmer": "avrisp",
+    "sketch": "trilho.ino"
+}
