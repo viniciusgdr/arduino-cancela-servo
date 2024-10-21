@@ -10,8 +10,10 @@ Servo servo_1;
 int pos;
 
 int buzzer = 11;
-int ledPinGreen = 12;
-int ledPinRed = 13;
+int ledPinGreenPt1 = 12;
+int ledPinRedPt1 = 13;
+int ledPinGreenPt2 = 2;
+int ledPinRedPt2 = 3;
 
 Ultrasonic ultrasonic(PINO_TRIGGER, PINO_ECHO);
 
@@ -31,8 +33,11 @@ void setup()
   servo_1.attach(SERVO_1);
   Serial.begin(9600);
 
-  pinMode(ledPinGreen, OUTPUT);
-  pinMode(ledPinRed, OUTPUT);
+  pinMode(ledPinGreenPt1, OUTPUT);
+  pinMode(ledPinRedPt1, OUTPUT);
+  pinMode(ledPinGreenPt2, OUTPUT);
+  pinMode(ledPinRedPt2, OUTPUT);
+
   pinMode(buzzer, OUTPUT);
 
   servo_1.write(0);
@@ -60,8 +65,10 @@ void loop()
   if (trainIsComing)
   {
     Serial.println("--------- Trem está chegando");
-    digitalWrite(ledPinGreen, LOW);
-    digitalWrite(ledPinRed, HIGH);
+    digitalWrite(ledPinGreenPt1, LOW);
+    digitalWrite(ledPinGreenPt2, LOW);
+    digitalWrite(ledPinRedPt1, HIGH);
+    digitalWrite(ledPinRedPt2, HIGH);
     if (!lastTrainPassedTimestamp.HasValue)
     {
       servo_1.write(90);
@@ -94,8 +101,10 @@ void loop()
   {
     Serial.println("-------- Trem não está chegando");
     servo_1.write(0);
-    digitalWrite(ledPinGreen, HIGH);
-    digitalWrite(ledPinRed, LOW);
+    digitalWrite(ledPinGreenPt1, HIGH);
+    digitalWrite(ledPinGreenPt2, HIGH);
+    digitalWrite(ledPinRedPt1, LOW);
+    digitalWrite(ledPinRedPt2, LOW);
     delay(300);
     return;
   }
