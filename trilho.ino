@@ -2,11 +2,13 @@
 #include <Servo.h>
 
 #define SERVO_1 5
+#define SERVO_2 6
 #define TIME_ATTACHMENT 1000
 #define PINO_TRIGGER 8
 #define PINO_ECHO 7
 
 Servo servo_1;
+Servo servo_2;
 int pos;
 
 int buzzer = 11;
@@ -31,6 +33,8 @@ bool alarmIsPlaying = false;
 void setup()
 {
   servo_1.attach(SERVO_1);
+  servo_2.attach(SERVO_2);
+
   Serial.begin(9600);
 
   pinMode(ledPinGreenPt1, OUTPUT);
@@ -41,6 +45,7 @@ void setup()
   pinMode(buzzer, OUTPUT);
 
   servo_1.write(0);
+  servo_2.write(0);
   lastTrainPassedTimestamp.HasValue = false;
   lastTrainPassedTimestamp.Value = 0;
 }
@@ -72,6 +77,7 @@ void loop()
     if (!lastTrainPassedTimestamp.HasValue)
     {
       servo_1.write(90);
+      servo_2.write(90);
       alarm(300, 1800);
       alarm(300, 1800);
       alarm(300, 1800);
@@ -101,6 +107,7 @@ void loop()
   {
     Serial.println("-------- Trem não está chegando");
     servo_1.write(0);
+    servo_2.write(0);
     digitalWrite(ledPinGreenPt1, HIGH);
     digitalWrite(ledPinGreenPt2, HIGH);
     digitalWrite(ledPinRedPt1, LOW);
